@@ -1,0 +1,48 @@
+{
+  "query": "10 hidden defects that destroy your PSA 10 grade how to spot them",
+  "date": "2025-11-09",
+  "top_results": [
+    {
+      "rank": 1,
+      "title": "PSA | Getting Started With Grading",
+      "url": "https://www.psacard.com/info/get-started",
+      "type": "official"
+    },
+    {
+      "rank": 2,
+      "title": "PSA | Grading Standards",
+      "url": "https://www.psacard.com/gradingstandards",
+      "type": "official"
+    },
+    {
+      "rank": 3,
+      "title": "First time grading with PSA, Does the surface really have to be flawless for a 10?",
+      "url": "https://forums.collectors.com/discussion/1048538/first-time-grading-with-psa-does-the-surface-really-have-to-be-flawless-for-a-10",
+      "type": "forum"
+    },
+    {
+      "rank": 4,
+      "title": "How To Grade Pokemon Cards",
+      "url": "https://www.pokemastercenter.com/how-to-grade-pokemon-cards/",
+      "type": "guide"
+    },
+    {
+      "rank": 5,
+      "title": "The Science of PSA Grading: What Makes a PSA 10?",
+      "url": "https://blockapps.net/blog/the-science-of-card-grading-what-makes-a-psa-10/",
+      "type": "blog"
+    },
+    {
+      "rank": 6,
+      "title": "What Is a PSA 10 Pokémon Card? (Complete Grading Guide 2025)",
+      "url": "https://ogcards.com/blogs/pokemon-cards/psa-10-pokemon-card-guide",
+      "type": "guide"
+    }
+  ],
+  "analysis": {
+    "top_competitor": "https://ogcards.com/blogs/pokemon-cards/psa-10-pokemon-card-guide",
+    "runner_up": "https://blockapps.net/blog/the-science-of-card-grading-what-makes-a-psa-10/",
+    "serp_intent": "informational_educational",
+    "format_types": ["comprehensive_guide", "blog_post", "official_documentation", "forum_discussion"]
+  }
+}

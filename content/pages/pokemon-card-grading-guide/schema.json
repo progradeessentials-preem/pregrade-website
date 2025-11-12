@@ -1,0 +1,309 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://pregrade.com/pokemon-card-grading-guide#article",
+      "headline": "Pokemon Card Grading Guide: What PSA, BGS & CGC Graders Look For in 2025",
+      "description": "Complete 2025 guide to Pokemon card grading covering PSA, BGS, and CGC standards, costs ($12-$19), gem rates (43-60%), turnaround times, and what graders look for. Updated November 2025.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://pregrade.com/images/pokemon-card-grading-guide-2025.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Person",
+        "name": "PreGrade Team",
+        "jobTitle": "Card Grading Specialists",
+        "url": "https://pregrade.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://pregrade.com/#organization",
+        "name": "PreGrade",
+        "url": "https://pregrade.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://pregrade.com/logo.png",
+          "width": 600,
+          "height": 60
+        }
+      },
+      "datePublished": "2025-11-09",
+      "dateModified": "2025-11-09",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://pregrade.com/pokemon-card-grading-guide"
+      },
+      "articleSection": "Card Grading Guides",
+      "wordCount": 5800,
+      "keywords": [
+        "pokemon card grading",
+        "PSA grading",
+        "BGS grading",
+        "CGC grading",
+        "pokemon card grading guide",
+        "what do graders look for",
+        "PSA vs BGS vs CGC",
+        "pokemon card grading cost",
+        "PSA 10 requirements",
+        "pokemon card centering",
+        "grading company comparison"
+      ],
+      "about": {
+        "@type": "Thing",
+        "name": "Pokemon Card Grading"
+      },
+      "isAccessibleForFree": true,
+      "citation": [
+        {
+          "@type": "CreativeWork",
+          "name": "PSA Official Grading Standards",
+          "url": "https://www.psacard.com/gradingstandards"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "CGC Official Grading Guide",
+          "url": "https://www.cgccomics.com/grading"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Beckett Grading Services",
+          "url": "https://www.beckett.com/grading"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "cllct Industry Report (H1 2025)",
+          "url": "https://www.cllct.com"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://pregrade.com/pokemon-card-grading-guide#faqpage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does PSA grading cost in 2025?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As of April 2025, PSA charges $18.99 per card for TCG Bulk submissions (previously $16.99). Higher service tiers range from $25 to $300+ depending on card value and desired turnaround time. A PSA Collectors Club membership is required ($99+/year)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What percentage of Pokemon cards get PSA 10?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In 2025, PSA's gem rate is 43% overall, with the TCG category (including Pokemon) achieving a 50% gem rate. This means approximately half of submitted Pokemon cards receive a PSA 10 grade."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is CGC or PSA better for Pokemon cards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PSA remains the market leader with 70%+ market share and best resale value consistency. However, CGC offers lower costs ($12-15 vs $18.99), faster turnaround, and CGC Pristine 10 can command premiums over PSA 10. Choose PSA for maximum resale value, CGC for budget-friendly grading and speed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the rarest Pokemon card grade?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BGS Black Label 10 (all four subgrades at perfect 10) and CGC Pristine 10 are the rarest and most valuable grades, rarer than standard PSA 10. Black Label 10 represents less than 5% of all BGS 10 grades and can command 2-5× the price of PSA 10."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does Pokemon card grading take in 2025?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Turnaround times in 2025: PSA Bulk: 65 business days (increased from 45), CGC Bulk: 30-40 business days (fastest), BGS Standard: 30-45 business days. Express services are available for additional fees with 3-10 day turnaround."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is PSA 10 centering?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PSA 10 centering requires 55/45 to 60/40 on the front and 75/25 on the back. This means one border can be at most 1.2× the thickness of the opposite border. Centering is measured as a percentage ratio of opposite border thicknesses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is CGC Pristine 10?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CGC Pristine 10 is CGC's premium grade above the standard Gem Mint 10. It features a gold PRISTINE label and requires exceptional centering (near 50/50), absolutely flawless corners, perfect edges, and immaculate surface. As of 2025, Pristine 10 examples can command higher prices than PSA 10 for the same card."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is BGS Black Label?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BGS Black Label (BGS 10) requires perfect 10 subgrades in all four categories: centering, corners, edges, and surface. The label features black trim instead of the standard gold. It is the most difficult grade to achieve and can sell for 2-5× the price of a standard PSA 10."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I grade modern Pokemon cards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if the card is worth $100+ in PSA 10 and appears to be in pack-fresh, gem mint condition. With 50% of Pokemon cards achieving PSA 10 in 2025, modern cards in perfect condition have a good chance of grading well. Use CGC for budget-friendly modern grading ($12-15 vs PSA $18.99)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I grade vintage Pokemon cards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely, if the card is in Near Mint or better condition and worth $100+ graded. Vintage Pokemon cards (Base Set, Jungle, Fossil, Team Rocket) appreciate significantly when graded, especially PSA 9 and PSA 10. Use PSA for vintage cards as it commands the best resale value."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I grade Pokemon cards myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, you cannot officially grade Pokemon cards yourself. Third-party authentication from PSA, CGC, or BGS is required for a grade to be recognized in the market. However, you can self-assess using the 4-factor checklist (centering, corners, edges, surface) to predict what grade your card might receive before submission."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does PSA 9 vs PSA 10 mean for value?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A PSA 10 typically sells for 2-10× more than a PSA 9 for the same card, depending on rarity and demand. For example, a PSA 9 Base Set Charizard might sell for $4,000, while a PSA 10 can exceed $15,000. The gap is largest for iconic, high-demand cards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I choose a grading company?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use this decision framework: Maximum resale value → PSA; Budget-friendly + fast → CGC; Premium grades (Pristine/Black Label) → CGC or BGS; Detailed subgrades → BGS; Vintage cards → PSA; Modern bulk → CGC."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why did PSA increase prices in 2025?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PSA increased TCG Bulk pricing from $16.99 to $18.99 in April 2025 due to increased demand (Pokemon accounts for 97 of top 100 graded cards by volume) and infrastructure investments to handle submission volume. Turnaround times also increased from 45 to 65 business days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if my Pokemon card grades lower than expected?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You have several options: Accept the grade and sell at the assigned grade's market value, crack and resubmit (break card out of slab and resubmit for regrading—risky and expensive), request review if you believe grading was inaccurate, or keep for personal collection. Most collectors accept the grade, as professional graders are highly trained and consistent."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://pregrade.com/pokemon-card-grading-guide#howto",
+      "name": "How to Prepare Pokemon Cards for Grading",
+      "description": "Step-by-step guide to preparing Pokemon cards for professional grading by PSA, CGC, or BGS",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://pregrade.com/images/pokemon-card-preparation.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "totalTime": "PT2H",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": "50"
+      },
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Research Your Cards",
+          "text": "Look up recent sales on eBay, TCGPlayer, or PWCC. Check PSA 10 population reports. Verify the card is worth grading (cost-benefit analysis). Identify your card exactly (set, card number, edition).",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Examine Your Cards Thoroughly",
+          "text": "Use jeweler's loupe or 10× magnifying glass, bright LED light, clean flat surface, and cotton gloves. Inspect centering, corners, edges, and surface systematically. Document any flaws.",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Take High-Quality Photos",
+          "text": "Use smartphone or camera with good resolution and bright, even lighting. Capture full front, full back, all 4 corners close-up, all 4 edges close-up, and any flaws. Store photos with card details for insurance purposes.",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Protect Your Cards",
+          "text": "Use penny sleeves and semi-rigid card savers (CardSaver I). Do NOT use magnetic holders, toploaders, or screwdowns. Handle with cotton gloves only. Store flat in cool, dry place.",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Complete Submission Forms",
+          "text": "Provide account details, card details (year, set, name, number), declared value for insurance, service level, and any special requests. Declare accurate value and use correct card names matching grading company database.",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Ship Your Cards",
+          "text": "Use USPS Priority Mail with insurance (up to $1,000) or FedEx/UPS with signature required ($1,000+). Pack cards between cardboard, use bubble mailers or small boxes with padding, add DO NOT BEND stickers. Always use tracking.",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 7,
+          "name": "Wait & Track",
+          "text": "PSA Bulk: 65 business days, CGC Bulk: 30-40 business days, BGS Standard: 30-45 business days. Track progress via online order status. Be patient during peak seasons.",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 8,
+          "name": "Receive & Verify",
+          "text": "Inspect slab for damage. Verify card matches submission. Check grade and label information. Confirm certification number and register online. Store in slab-safe case or display. Contact company immediately if there are issues.",
+          "url": "https://pregrade.com/pokemon-card-grading-guide#preparation"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://pregrade.com/pokemon-card-grading-guide#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://pregrade.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://pregrade.com/guides"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Pokemon Card Grading Guide",
+          "item": "https://pregrade.com/pokemon-card-grading-guide"
+        }
+      ]
+    }
+  ]
+}
