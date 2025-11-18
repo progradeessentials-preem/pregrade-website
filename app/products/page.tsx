@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { products, formatPrice } from "@/lib/products";
+import { fetchStripeProductsServer, formatPrice } from "@/lib/stripe-products-server";
 import { CheckCircle2 } from "lucide-react";
 
 export const metadata = {
@@ -12,7 +12,10 @@ export const metadata = {
   description: "Professional card authentication and defect detection tools. Protect your investments with precision inspection technology.",
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  // Fetch products from Stripe (server-side direct call)
+  const products = await fetchStripeProductsServer();
+
   return (
     <div className="flex min-h-screen flex-col bg-gray-900">
       <Header />
@@ -72,24 +75,17 @@ export default function ProductsPage() {
                   key={product.id}
                   className="group relative bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/20 flex flex-col"
                 >
-                  {/* Tier Badge */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <Badge className="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold">
-                      {product.tier}
-                    </Badge>
-                  </div>
-
                   {/* Product Image/Icon */}
                   <div className="relative p-8 text-center bg-gradient-to-br from-gray-800/50 to-gray-900/50">
-                    <div className="text-8xl mb-4">{product.image}</div>
-                    {product.inStock ? (
+                    <img
+                      src="/pocket-scope.png"
+                      alt={product.name}
+                      className="mx-auto h-48 w-auto object-contain mb-4"
+                    />
+                    {product.active && (
                       <Badge className="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs gap-1">
                         <CheckCircle2 className="h-3 w-3" />
                         In Stock - Ships Today
-                      </Badge>
-                    ) : (
-                      <Badge className="bg-red-500/20 text-red-300 border border-red-500/30 text-xs">
-                        Out of Stock
                       </Badge>
                     )}
                   </div>
@@ -99,34 +95,17 @@ export default function ProductsPage() {
                     <h3 className="text-2xl font-bold text-white mb-2">
                       {product.name}
                     </h3>
-                    <p className="text-base text-indigo-300 font-semibold mb-4">
-                      {product.tagline}
-                    </p>
-                    <p className="text-sm text-gray-400 mb-6 line-clamp-3">
+                    <p className="text-sm text-gray-400 mb-6 line-clamp-4">
                       {product.description}
                     </p>
-
-                    {/* Features */}
-                    <div className="mb-6 space-y-2 flex-1">
-                      {product.features.slice(0, 4).map((feature) => (
-                        <div key={feature} className="flex items-start gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                          <span className="text-gray-300">{feature}</span>
-                        </div>
-                      ))}
-                      {product.features.length > 4 && (
-                        <p className="text-xs text-gray-500 mt-2">
-                          +{product.features.length - 4} more features
-                        </p>
-                      )}
-                    </div>
 
                     {/* Price and CTA */}
                     <div className="mt-auto space-y-4 pt-6 border-t border-gray-700">
                       <div className="flex items-baseline gap-2">
                         <span className="text-4xl font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                          {formatPrice(product.price)}
+                          {formatPrice(product.price, product.currency)}
                         </span>
+                        <span className="text-sm text-gray-400 uppercase">{product.currency}</span>
                       </div>
                       <Button
                         className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-all duration-200 hover:scale-105"

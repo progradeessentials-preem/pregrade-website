@@ -1,15 +1,26 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Product } from "./products";
+
+// Flexible product type that works with both old Product and StripeProduct
+export interface CartProduct {
+  id: string;
+  name: string;
+  price: number;
+  priceId?: string; // Stripe price ID
+  image?: string;
+  description?: string;
+  currency?: string;
+  [key: string]: any; // Allow additional fields
+}
 
 export interface CartItem {
-  product: Product;
+  product: CartProduct;
   quantity: number;
 }
 
 interface CartStore {
   items: CartItem[];
-  addItem: (product: Product) => void;
+  addItem: (product: CartProduct) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;

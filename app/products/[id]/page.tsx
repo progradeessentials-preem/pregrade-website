@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { products, getProductById, formatPrice } from "@/lib/products";
+import { fetchStripeProductsServer, getStripeProductByIdServer, formatPrice } from "@/lib/stripe-products-server";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { ProductImageGallery } from "@/components/ProductImageGallery";
 import { SocialProofBanner, RecentPurchases } from "@/components/SocialProofWidgets";
@@ -16,6 +16,7 @@ import { ReviewForm } from "@/components/ReviewForm";
 
 // Generate static params for all products
 export async function generateStaticParams() {
+  const products = await fetchStripeProductsServer();
   return products.map((product) => ({
     id: product.id,
   }));
@@ -24,7 +25,7 @@ export async function generateStaticParams() {
 // Generate metadata for each product
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getStripeProductByIdServer(id);
 
   if (!product) {
     return {
@@ -33,29 +34,27 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 
   // Create SEO-optimized title and description
-  const title = `${product.name} - ${product.tagline} | PreGrade Essentials`;
+  const title = `${product.name} | PreGrade Essentials`;
   const description = product.description.slice(0, 160); // Meta description limit
   const productUrl = `https://pregradeessentials.com/products/${product.id}`;
-  const imageUrl = product.id === "pocket-scope"
-    ? "https://pregradeessentials.com/pocket-scope.png"
-    : "https://pregradeessentials.com/product-default.png";
+  const imageUrl = product.image.startsWith('http')
+    ? product.image
+    : "https://pregradeessentials.com/pocket-scope.png";
 
   return {
     title,
     description,
     keywords: [
       product.name,
-      product.tagline,
       "card grading tools",
       "PSA authentication",
       "sports card inspection",
       "Pokemon card grading",
       "TCG card tools",
-      product.tier.toLowerCase() + " tier",
     ],
     openGraph: {
-      title: `${product.name} - ${formatPrice(product.price)}`,
-      description: product.tagline,
+      title: `${product.name} - ${formatPrice(product.price, product.currency)}`,
+      description: product.description.slice(0, 200),
       type: "website",
       url: productUrl,
       images: [
@@ -70,8 +69,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} - ${formatPrice(product.price)}`,
-      description: product.tagline,
+      title: `${product.name} - ${formatPrice(product.price, product.currency)}`,
+      description: product.description.slice(0, 200),
       images: [imageUrl],
     },
     alternates: {
@@ -86,7 +85,7 @@ export default async function ProductDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getStripeProductByIdServer(id);
 
   if (!product) {
     notFound();
@@ -200,33 +199,10 @@ export default async function ProductDetailPage({
         <section className="container-padding relative bg-gray-900 mx-auto max-w-7xl py-16 md:py-24">
           <div className="grid gap-12 md:grid-cols-2">
             {/* Product Images */}
-            {product.id === "pocket-scope" ? (
-              <ProductImageGallery
-                images={pocketScopeImages}
-                productName={product.name}
-              />
-            ) : (
-              <div>
-                <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl overflow-hidden">
-                  <div className="flex aspect-square items-center justify-center bg-gray-800/50 text-[12rem] md:text-[16rem]">
-                    {product.image}
-                  </div>
-                </div>
-                {/* Thumbnail Gallery */}
-                <div className="mt-4 grid grid-cols-3 gap-4">
-                  {product.images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-xl cursor-pointer hover:border-indigo-500/50 transition-all duration-300"
-                    >
-                      <div className="flex aspect-square items-center justify-center p-4 text-5xl">
-                        {img}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <ProductImageGallery
+              images={pocketScopeImages}
+              productName={product.name}
+            />
 
             {/* Product Info */}
             <div className="flex flex-col">
@@ -236,39 +212,62 @@ export default async function ProductDetailPage({
               </div>
 
               <h1 className="text-4xl font-extrabold text-white md:text-5xl">{product.name}</h1>
-              <p className="mt-3 text-xl text-indigo-300 font-semibold">{product.tagline}</p>
 
               <div className="mt-6">
                 <div className="flex items-baseline gap-3">
                   <span className="text-5xl font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                    {formatPrice(product.price)}
+                    {formatPrice(product.price, product.currency)}
                   </span>
-                  <span className="text-2xl text-gray-500 line-through">$99.99</span>
+                  {product.price < 50 && (
+                    <span className="text-2xl text-gray-500 line-through">$99.99</span>
+                  )}
                 </div>
-                <p className="mt-2 text-sm text-emerald-400 font-semibold">Save $25 - Launch Special Pricing</p>
-                <p className="text-xs text-red-400">Price returns to $99.99 when initial stock sells out</p>
+                {product.price < 50 && (
+                  <>
+                    <p className="mt-2 text-sm text-emerald-400 font-semibold">Save $25 - Launch Special Pricing</p>
+                    <p className="text-xs text-red-400">Price returns to $99.99 when initial stock sells out</p>
+                  </>
+                )}
               </div>
 
               <p className="mt-6 text-lg text-gray-300 leading-relaxed">{product.description}</p>
 
-              {/* What's Included */}
-              {product.includedItems && (
+              {/* What's Included - Only show for Pocket Scope */}
+              {product.name.includes("Pocket Scope") && (
                 <div className="mt-8 bg-gradient-to-br from-emerald-900/20 to-blue-900/20 border border-emerald-500/30 rounded-2xl p-6">
                   <h3 className="mb-4 font-bold text-white text-xl flex items-center gap-2">
                     <Package className="h-5 w-5 text-emerald-400" />
                     Complete Kit - Everything Included
                   </h3>
                   <ul className="space-y-3">
-                    {product.includedItems.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400" />
-                        <span className="text-gray-200 font-medium">{item}</span>
-                      </li>
-                    ))}
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-200 font-medium">The Pocket Scope™ Digital Magnifier</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-200 font-medium">Built-in UV Light for PSA Authentication</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-200 font-medium">Premium Carrying Case</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-200 font-medium">USB-C Charging Cable</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-200 font-medium">Microfiber Cleaning Cloth</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-200 font-medium">Quick Start Guide & Authentication Tips</span>
+                    </li>
                   </ul>
                   <div className="mt-6 pt-6 border-t border-emerald-500/20">
                     <p className="text-sm text-emerald-300 font-semibold">
-                      🎁 $150+ value - All for just $74.99
+                      🎁 $150+ value - Complete authentication kit
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       Everything you need to start authenticating cards today
@@ -285,18 +284,34 @@ export default async function ProductDetailPage({
                 Free shipping on orders over $50 • 30-day money back guarantee
               </p>
 
-              {/* Product Features */}
-              <div className="mt-8 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl p-6">
-                <h3 className="mb-4 font-bold text-white text-lg">Key Features</h3>
-                <ul className="space-y-3">
-                  {product.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm">
+              {/* Product Features - Only show for Pocket Scope */}
+              {product.name.includes("Pocket Scope") && (
+                <div className="mt-8 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl p-6">
+                  <h3 className="mb-4 font-bold text-white text-lg">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2 text-sm">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" />
-                      <span className="text-gray-300">{feature}</span>
+                      <span className="text-gray-300">50x Magnification - See micro-scratches and print defects</span>
                     </li>
-                  ))}
-                </ul>
-              </div>
+                    <li className="flex items-start gap-2 text-sm">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-300">Built-in UV Light - Verify PSA authentication marks</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-300">LED Ring Light - Eliminate shadows, perfect illumination</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-300">Rechargeable Battery - 8+ hours continuous use</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" />
+                      <span className="text-gray-300">Pocket-sized Design - Fits in your pocket, perfect for card shows</span>
+                    </li>
+                  </ul>
+                </div>
+              )}
 
               {/* Trust Badges */}
               <div className="mt-6 grid grid-cols-3 gap-4">
@@ -317,27 +332,42 @@ export default async function ProductDetailPage({
           </div>
         </section>
 
-        {/* Specifications */}
-        <section className="border-t border-gray-800 bg-gray-900 py-16 md:py-24">
-          <div className="container-padding mx-auto max-w-7xl">
-            <h2 className="mb-12 text-4xl font-extrabold text-white">Technical Specifications</h2>
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl overflow-hidden">
-              <div className="divide-y divide-gray-700">
-                {product.specifications.map((spec) => (
-                  <div
-                    key={spec.label}
-                    className="grid grid-cols-2 gap-4 px-8 py-5 md:grid-cols-3 hover:bg-gray-800/50 transition-colors"
-                  >
-                    <span className="font-semibold text-white">{spec.label}</span>
-                    <span className="text-gray-400 md:col-span-2">
-                      {spec.value}
-                    </span>
+        {/* Specifications - Only show for Pocket Scope */}
+        {product.name.includes("Pocket Scope") && (
+          <section className="border-t border-gray-800 bg-gray-900 py-16 md:py-24">
+            <div className="container-padding mx-auto max-w-7xl">
+              <h2 className="mb-12 text-4xl font-extrabold text-white">Technical Specifications</h2>
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-2xl overflow-hidden">
+                <div className="divide-y divide-gray-700">
+                  <div className="grid grid-cols-2 gap-4 px-8 py-5 md:grid-cols-3 hover:bg-gray-800/50 transition-colors">
+                    <span className="font-semibold text-white">Magnification</span>
+                    <span className="text-gray-400 md:col-span-2">50x optical magnification</span>
                   </div>
-                ))}
+                  <div className="grid grid-cols-2 gap-4 px-8 py-5 md:grid-cols-3 hover:bg-gray-800/50 transition-colors">
+                    <span className="font-semibold text-white">UV Light</span>
+                    <span className="text-gray-400 md:col-span-2">365nm wavelength for PSA authentication</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 px-8 py-5 md:grid-cols-3 hover:bg-gray-800/50 transition-colors">
+                    <span className="font-semibold text-white">LED Ring</span>
+                    <span className="text-gray-400 md:col-span-2">8 high-brightness LEDs, adjustable intensity</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 px-8 py-5 md:grid-cols-3 hover:bg-gray-800/50 transition-colors">
+                    <span className="font-semibold text-white">Battery</span>
+                    <span className="text-gray-400 md:col-span-2">Rechargeable lithium-ion, 8+ hours runtime</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 px-8 py-5 md:grid-cols-3 hover:bg-gray-800/50 transition-colors">
+                    <span className="font-semibold text-white">Dimensions</span>
+                    <span className="text-gray-400 md:col-span-2">4.5" x 2.5" x 1" (114mm x 64mm x 25mm)</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 px-8 py-5 md:grid-cols-3 hover:bg-gray-800/50 transition-colors">
+                    <span className="font-semibold text-white">Weight</span>
+                    <span className="text-gray-400 md:col-span-2">3.5 oz (100g)</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Reviews Section */}
         <ProductReviews productId={product.id} />
