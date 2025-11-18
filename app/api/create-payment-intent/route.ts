@@ -66,6 +66,14 @@ export async function POST(request: NextRequest) {
     // Initialize Stripe
     const stripe = getServerStripe();
 
+    // Check if Stripe is configured
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Payment processing is not configured. Please contact support.' },
+        { status: 503 }
+      );
+    }
+
     // Create PaymentIntent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCents,

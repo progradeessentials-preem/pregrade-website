@@ -52,14 +52,14 @@ let stripeServerInstance: StripeServer | null = null;
  * WARNING: SERVER-ONLY - NEVER import in client components.
  * Uses secret key with full API access.
  */
-export function getServerStripe(): StripeServer {
+export function getServerStripe(): StripeServer | null {
   const secretKey = process.env.STRIPE_SECRET_KEY;
 
   if (!secretKey) {
-    throw new Error(
-      'Missing STRIPE_SECRET_KEY environment variable. ' +
-      'Add it to .env.local for development (sk_test_...) or production (sk_live_...)'
-    );
+    // During build time (GitHub Actions), Stripe keys might not be available
+    // Return null to allow static generation to complete
+    console.warn('[Stripe] STRIPE_SECRET_KEY not found - Stripe features disabled');
+    return null;
   }
 
   // Validate key format
@@ -108,6 +108,10 @@ export function verifyWebhookSignature(
   }
 
   const stripe = getServerStripe();
+
+  if (!stripe) {
+    throw new Error('Stripe is not configured');
+  }
 
   try {
     return stripe.webhooks.constructEvent(payload, signature, webhookSecret);

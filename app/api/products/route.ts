@@ -29,6 +29,18 @@ export async function GET() {
   try {
     const stripe = getServerStripe();
 
+    // Check if Stripe is configured
+    if (!stripe) {
+      return NextResponse.json(
+        { products: [] },
+        {
+          headers: {
+            'Cache-Control': 'public, s-maxage=60',
+          },
+        }
+      );
+    }
+
     // Fetch all active products with their default prices expanded
     const productsResponse = await stripe.products.list({
       active: true,

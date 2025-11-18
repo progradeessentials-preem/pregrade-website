@@ -27,6 +27,12 @@ export async function fetchStripeProductsServer(): Promise<StripeProduct[]> {
   try {
     const stripe = getServerStripe();
 
+    // If Stripe is not configured (e.g., during build), return empty array
+    if (!stripe) {
+      console.warn('[Stripe Products] Stripe not configured, returning empty product list');
+      return [];
+    }
+
     // Fetch all active products with their default prices expanded
     const productsResponse = await stripe.products.list({
       active: true,
